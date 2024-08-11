@@ -22,6 +22,8 @@ import com.figueroa.githubclonesampleapp.R
 import com.figueroa.githubclonesampleapp.components.GitHubCloneAppBar
 import com.figueroa.githubclonesampleapp.components.RepositoryItem
 import com.figueroa.githubclonesampleapp.model.GitHubRepository
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 
 @Composable
 fun GitHubRepositoryList(
@@ -40,38 +42,51 @@ fun GitHubRepositoryList(
     ) { contentPadding ->
         Column(modifier = Modifier.padding(contentPadding)) {
             val listOfGitHubRepositories = gitHubRepositoryListViewModel.list
-            if (gitHubRepositoryListViewModel.isLoading && listOfGitHubRepositories.isEmpty()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                LazyColumn {
-                    items(items = listOfGitHubRepositories) { repository ->
-                        RepositoryItem(
-                            gitHubRepositoryInformation = repository,
-                            navController = navController
-                        )
+            SwipeRefresh(
+                state = SwipeRefreshState(isRefreshing = gitHubRepositoryListViewModel.isLoading),
+                onRefresh = {
+                    // Reset the state to initial values
+                    gitHubRepositoryListViewModel.apply {
+                        list = listOf()
+                        currentPage = 1
+                        isLastPage = false
+                        loadGitHubRepositories()
                     }
-                    item {
-                        if (gitHubRepositoryListViewModel.isLoading) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                CircularProgressIndicator()
-                            }
-                        } else {
-                            LaunchedEffect(Unit) {
-                                gitHubRepositoryListViewModel.loadGitHubRepositories()
+                }
+            ) {
+                if (gitHubRepositoryListViewModel.isLoading && listOfGitHubRepositories.isEmpty()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                } else {
+                    LazyColumn {
+                        items(items = listOfGitHubRepositories) { repository ->
+                            RepositoryItem(
+                                gitHubRepositoryInformation = repository,
+                                navController = navController
+                            )
+                        }
+                        item {
+                            if (gitHubRepositoryListViewModel.isLoading) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    CircularProgressIndicator()
+                                }
+                            } else {
+                                LaunchedEffect(Unit) {
+                                    gitHubRepositoryListViewModel.loadGitHubRepositories()
+                                }
                             }
                         }
                     }

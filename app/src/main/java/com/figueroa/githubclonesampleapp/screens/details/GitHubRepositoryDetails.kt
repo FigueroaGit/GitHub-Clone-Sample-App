@@ -12,6 +12,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -33,6 +34,8 @@ import com.figueroa.githubclonesampleapp.ui.theme.Green80
 import com.figueroa.githubclonesampleapp.ui.theme.Orange90
 import com.figueroa.githubclonesampleapp.ui.theme.Red70
 import com.figueroa.githubclonesampleapp.ui.theme.Yellow90
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 
 @Composable
 fun GitHubRepositoryDetails(
@@ -42,6 +45,7 @@ fun GitHubRepositoryDetails(
     gitHubRepositoryDetailsViewModel: GitHubRepositoryDetailsViewModel
 ) {
     var showMoreSections by remember { mutableStateOf(false) }
+    var isRefreshing by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             GitHubCloneAppBar(
@@ -52,95 +56,114 @@ fun GitHubRepositoryDetails(
                 onBackPressed = { navController.popBackStack() })
         }
     ) { contentPadding ->
-        val repoInformation =
+        var repoInformation =
             produceState<Resource<GitHubRepositoryInformation>>(initialValue = Resource.Loading()) {
                 value = gitHubRepositoryDetailsViewModel.getGitHubRepositoryInformation(owner, name)
             }.value
 
-        if (repoInformation.data == null) {
-            Column(
-                modifier = Modifier
-                    .padding(contentPadding)
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                CircularProgressIndicator()
-                Text(text = "Loading...")
+        LaunchedEffect(isRefreshing) {
+            if (isRefreshing) {
+                repoInformation =
+                    gitHubRepositoryDetailsViewModel.getGitHubRepositoryInformation(owner, name)
+                isRefreshing = false
             }
-        } else {
-            Column(modifier = Modifier.padding(contentPadding).verticalScroll(state = rememberScrollState())) {
-                RepositoryDetailHeader(
-                    gitHubRepositoryInformation = repoInformation.data,
-                    navController = navController
-                )
-                WorkSection(
-                    backgroundColor = Green80,
-                    icon = R.drawable.ic_issues,
-                    foregroundColor = Color.White,
-                    label = "Issues",
-                    hasInfo = true,
-                    info = repoInformation.data.open_issues_count.toString()
-                ) {}
-                WorkSection(
-                    backgroundColor = Blue50,
-                    icon = R.drawable.ic_pull_request,
-                    foregroundColor = Color.White,
-                    label = "Pull Request",
-                    hasInfo = false
-                ) {}
-                WorkSection(
-                    backgroundColor = Yellow90,
-                    icon = R.drawable.ic_actions,
-                    foregroundColor = Color.White,
-                    label = "Actions",
-                    hasInfo = false
-                ) {}
-                if (!showMoreSections) {
+        }
+
+        SwipeRefresh(
+            state = SwipeRefreshState(isRefreshing = isRefreshing),
+            onRefresh = {
+                isRefreshing = true
+            }
+        ) {
+            if (repoInformation.data == null) {
+                Column(
+                    modifier = Modifier
+                        .padding(contentPadding)
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator()
+                    Text(text = "Loading...")
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .padding(contentPadding)
+                        .verticalScroll(state = rememberScrollState())
+                ) {
+                    RepositoryDetailHeader(
+                        gitHubRepositoryInformation = repoInformation.data!!,
+                        navController = navController
+                    )
                     WorkSection(
-                        backgroundColor = Color.LightGray,
-                        icon = R.drawable.ic_more_horiz,
-                        foregroundColor = Color.Black,
-                        label = "More",
-                        hasInfo = true
-                    ) {
-                        showMoreSections = true
-                    }
-                } else {
-                    WorkSection(
-                        backgroundColor = Orange90,
-                        icon = R.drawable.ic_users,
+                        backgroundColor = Green80,
+                        icon = R.drawable.ic_issues,
                         foregroundColor = Color.White,
-                        label = "Contributors",
+                        label = "Issues",
+                        hasInfo = true,
+                        info = repoInformation.data!!.open_issues_count.toString()
+                    ) {}
+                    WorkSection(
+                        backgroundColor = Blue50,
+                        icon = R.drawable.ic_pull_request,
+                        foregroundColor = Color.White,
+                        label = "Pull Request",
                         hasInfo = false
                     ) {}
                     WorkSection(
                         backgroundColor = Yellow90,
-                        icon = R.drawable.ic_watchers,
+                        icon = R.drawable.ic_actions,
                         foregroundColor = Color.White,
-                        label = "Watchers",
+                        label = "Actions",
                         hasInfo = false
                     ) {}
-                    WorkSection(
-                        backgroundColor = Red70,
-                        icon = R.drawable.ic_license,
-                        foregroundColor = Color.White,
-                        label = "License",
-                        hasInfo = true,
-                        info = if (repoInformation.data.license == null) {
-                            ""
-                        } else {
-                            repoInformation.data.license?.spdx_id.toString()
+                    if (!showMoreSections) {
+                        WorkSection(
+                            backgroundColor = Color.LightGray,
+                            icon = R.drawable.ic_more_horiz,
+                            foregroundColor = Color.Black,
+                            label = "More",
+                            hasInfo = true
+                        ) {
+                            showMoreSections = true
                         }
-                    ) {}
-                }
-                HorizontalDivider()
-                RepositoryBranchDetail(
-                    gitHubRepositoryInformation = repoInformation.data,
-                    navController = navController
-                )
+                    } else {
+                        WorkSection(
+                            backgroundColor = Orange90,
+                            icon = R.drawable.ic_users,
+                            foregroundColor = Color.White,
+                            label = "Contributors",
+                            hasInfo = false
+                        ) {}
+                        WorkSection(
+                            backgroundColor = Yellow90,
+                            icon = R.drawable.ic_watchers,
+                            foregroundColor = Color.White,
+                            label = "Watchers",
+                            hasInfo = false
+                        ) {}
+                        WorkSection(
+                            backgroundColor = Red70,
+                            icon = R.drawable.ic_license,
+                            foregroundColor = Color.White,
+                            label = "License",
+                            hasInfo = true,
+                            info = if (repoInformation.data!!.license == null) {
+                                ""
+                            } else {
+                                repoInformation.data!!.license?.spdx_id.toString()
+                            }
+                        ) {}
+                    }
+                    HorizontalDivider()
+                    RepositoryBranchDetail(
+                        gitHubRepositoryInformation = repoInformation.data!!,
+                        navController = navController
+                    )
 
+                }
             }
         }
     }

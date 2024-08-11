@@ -16,8 +16,8 @@ class GitHubRepositoryListViewModel(private val repository: GitHubRepositoryRepo
 
     var list: List<GitHubRepositoryInformation> by mutableStateOf(listOf())
     var isLoading: Boolean by mutableStateOf(false)
-    private var currentPage = 1
-    private var isLastPage = false
+    var currentPage = 1
+    var isLastPage = false
 
     init {
         loadGitHubRepositories()

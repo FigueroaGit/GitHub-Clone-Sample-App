@@ -83,6 +83,9 @@ dependencies {
     // Coil
     implementation(libs.coil)
 
+    // SwipeRefresh
+    implementation(libs.com.google.accompanist)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
