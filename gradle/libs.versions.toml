@@ -14,7 +14,6 @@ serialization = "1.7.0"
 retrofit = "2.11.0"
 okhttp = "5.0.0-alpha.14"
 navigationCompose = "2.7.7"
-webkit = "1.11.0"
 coil = "2.7.0"
 
 [libraries]
@@ -46,7 +45,6 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
-androidx-webkit = { module = "androidx.webkit:webkit", version.ref = "webkit"}
 coil = {module = "io.coil-kt:coil-compose", version.ref = "coil"}
 
 

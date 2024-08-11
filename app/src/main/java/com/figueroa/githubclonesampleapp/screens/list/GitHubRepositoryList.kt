@@ -12,6 +12,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,9 +27,6 @@ import com.figueroa.githubclonesampleapp.model.GitHubRepository
 fun GitHubRepositoryList(
     navController: NavController,
     gitHubRepositoryListViewModel: GitHubRepositoryListViewModel,
-    query: String,
-    perPage: Int,
-    page: Int
 ) {
     Scaffold(
         topBar = {
@@ -42,13 +40,15 @@ fun GitHubRepositoryList(
     ) { contentPadding ->
         Column(modifier = Modifier.padding(contentPadding)) {
             val listOfGitHubRepositories = gitHubRepositoryListViewModel.list
-            if (gitHubRepositoryListViewModel.isLoading) {
+            if (gitHubRepositoryListViewModel.isLoading && listOfGitHubRepositories.isEmpty()) {
                 Row(
-                    modifier = Modifier.padding(end = 2.dp),
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                    CircularProgressIndicator()
                 }
             } else {
                 LazyColumn {
@@ -58,9 +58,25 @@ fun GitHubRepositoryList(
                             navController = navController
                         )
                     }
+                    item {
+                        if (gitHubRepositoryListViewModel.isLoading) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                CircularProgressIndicator()
+                            }
+                        } else {
+                            LaunchedEffect(Unit) {
+                                gitHubRepositoryListViewModel.loadGitHubRepositories()
+                            }
+                        }
+                    }
                 }
             }
         }
-
     }
 }

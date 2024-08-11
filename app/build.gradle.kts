@@ -60,7 +60,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.serialization.json)
-    implementation(libs.androidx.webkit)
 
     // Ktor
     implementation(libs.ktor.client.android)

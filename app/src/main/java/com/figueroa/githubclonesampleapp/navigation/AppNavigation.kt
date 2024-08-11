@@ -24,9 +24,6 @@ fun AppNavigation() {
             GitHubRepositoryList(
                 navController,
                 gitHubRepositoryListViewModel,
-                query = "Kotlin",
-                perPage = 10,
-                page = 1
             )
         }
         composable(
@@ -36,13 +33,12 @@ fun AppNavigation() {
             }, navArgument("name") {
                 type = NavType.StringType
             })
-        ) {
-            backStackEntry ->
+        ) { backStackEntry ->
             backStackEntry.arguments?.getString("owner").let { owner ->
                 backStackEntry.arguments?.getString("name").let { name ->
                     GitHubRepositoryDetails(navController, owner!!, name!!, getViewModel())
                 }
+            }
         }
     }
-}
 }

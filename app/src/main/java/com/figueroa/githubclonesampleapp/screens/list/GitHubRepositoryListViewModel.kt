@@ -15,19 +15,28 @@ class GitHubRepositoryListViewModel(private val repository: GitHubRepositoryRepo
     ViewModel() {
 
     var list: List<GitHubRepositoryInformation> by mutableStateOf(listOf())
-    var isLoading: Boolean by mutableStateOf(true)
+    var isLoading: Boolean by mutableStateOf(false)
+    private var currentPage = 1
+    private var isLastPage = false
 
     init {
         loadGitHubRepositories()
     }
 
-    private fun loadGitHubRepositories() {
-        viewModelScope.launch(Dispatchers.Default) {
+    fun loadGitHubRepositories() {
+        if (isLoading || isLastPage) return
+
+        viewModelScope.launch {
+            isLoading = true
             try {
-                when (val response = repository.getGitHubRepositories("Kotlin", 10, 1)) {
+                when (val response = repository.getGitHubRepositories("Kotlin", 30, currentPage)) {
                     is Resource.Success -> {
-                        list = response.data!!.filter { it.language == "Kotlin" }
-                        if(list.isNotEmpty()) isLoading = false
+                        val newList = response.data!!.filter { it.language == "Kotlin" }
+                        list = list + newList
+                        currentPage++
+                        if (newList.isEmpty()) {
+                            isLastPage = true
+                        }
                     }
 
                     is Resource.Error -> {
@@ -39,6 +48,8 @@ class GitHubRepositoryListViewModel(private val repository: GitHubRepositoryRepo
                     }
                 }
             } catch (e: Exception) {
+                e.message
+            } finally {
                 isLoading = false
             }
         }

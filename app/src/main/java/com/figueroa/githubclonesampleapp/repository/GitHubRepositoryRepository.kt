@@ -12,7 +12,8 @@ class GitHubRepositoryRepository(private val API: GitHubRepositoryAPI) {
     ): Resource<List<GitHubRepositoryInformation>> {
         return try {
             Resource.Loading(data = true)
-            val itemList = API.getGitHubRepositories().items
+            val itemList =
+                API.getGitHubRepositories(query = language, perPage = perPage, page = page).items
             if (itemList.isNotEmpty()) {
                 Resource.Loading(data = false)
             }
@@ -22,10 +23,13 @@ class GitHubRepositoryRepository(private val API: GitHubRepositoryAPI) {
         }
     }
 
-    suspend fun getGitHubRepositoryInformation(owner: String, name: String): Resource<GitHubRepositoryInformation> {
+    suspend fun getGitHubRepositoryInformation(
+        owner: String,
+        name: String
+    ): Resource<GitHubRepositoryInformation> {
         val response = try {
             Resource.Loading(data = true)
-            API.getGitHubRepositoryInformation(owner,name)
+            API.getGitHubRepositoryInformation(owner, name)
         } catch (exception: Exception) {
             return Resource.Error(message = "An error occurred ${exception.message}")
         }

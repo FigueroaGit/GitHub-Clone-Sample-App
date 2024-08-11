@@ -10,9 +10,9 @@ interface GitHubRepositoryAPI {
 
     @GET("/search/repositories")
     suspend fun getGitHubRepositories(
-        @Query("q") query: String = "Kotlin",
-        @Query("perpage") perPage: Int = 30,
-        @Query("page") page: Int = 1,
+        @Query("q") query: String,
+        @Query("perpage") perPage: Int,
+        @Query("page") page: Int,
     ): GitHubRepository
 
     @GET("/repos/{owner}/{repo}")
