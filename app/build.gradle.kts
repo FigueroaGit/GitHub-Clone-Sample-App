@@ -59,17 +59,30 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.serialization.json)
+    implementation(libs.androidx.webkit)
 
     // Ktor
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.json)
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.content.negotiation)
+
+    // Retrofit
+    implementation(libs.retrofit2)
+    implementation(libs.retrofit2.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit2.converter.scalars)
 
     // Koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    // Coil
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
