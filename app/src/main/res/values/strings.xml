@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">GitHub Clone Sample App</string>
+    <string name="icon_back_description">Icon Back</string>
+    <string name="icon_arrow_down_description">Arrow Down</string>
+    <string name="icon_search_description">Search Action</string>
+    <string name="icon_add_description">Add Action</string>
+    <string name="icon_more_description">More Action</string>
+    <string name="avatar_description">Avatar Image</string>
+    <string name="homepage_description">Home Page</string>
+    <string name="watchers_description">Watchers</string>
+    <string name="forks_description">forks</string>
+    <string name="star_description">Stars</string>
+    <string name="notifications_description">Notifications</string>
+    <string name="button_change_branch">Change Branch</string>
+    <string name="button_star">Star</string>
+    <string name="label_code">Code</string>
+    <string name="label_commits">Commits</string>
+    <string name="label_stars">%1s stars</string>
+    <string name="label_forks">%1s forks</string>
+
+    <string name="message_still_work_in_progress">Still work in progress"</string>
 </resources>

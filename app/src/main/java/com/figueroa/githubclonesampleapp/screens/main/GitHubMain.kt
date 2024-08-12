@@ -56,26 +56,26 @@ fun GitHubMainScreen(navController: NavController) {
 fun getWorkItems(navController: NavController): List<WorkItem> {
     return listOf(
         WorkItem(Green80, R.drawable.ic_issues, "Issues") {
-            // Acción para Issues
+            // TODO: Add behavior for Issues
         },
         WorkItem(Blue50, R.drawable.ic_pull_request, "Pull Request") {
-            // Acción para Pull Request
+            // TODO: Add behavior for Pull Request
         },
         WorkItem(Purple100, R.drawable.ic_discussions, "Discussions") {
-            // Acción para Discussions
+            // TODO: Add behavior for Discussions
         },
         WorkItem(Gray30, R.drawable.ic_projects, "Projects") {
-            // Acción para Projects
+            // TODO: Add behavior for Projects
         },
         WorkItem(Black50, R.drawable.ic_repositories, "Repositories") {
             Log.i("Enter Button", "Repositories")
             navController.navigate(AppScreens.GitHubRepositoryListScreen.name)
         },
         WorkItem(Orange70, R.drawable.ic_organizations, "Organizations") {
-            // Acción para Organizations
+            // TODO: Add behavior for Organizations
         },
         WorkItem(Yellow90, R.drawable.ic_starred, "Starred") {
-            // Acción para Starred
+            // TODO: Add behavior for Starred
         }
     )
 }

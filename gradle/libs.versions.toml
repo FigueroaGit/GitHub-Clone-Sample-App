@@ -16,6 +16,9 @@ okhttp = "5.0.0-alpha.14"
 navigationCompose = "2.7.7"
 coil = "2.7.0"
 swipe-refresh = "0.25.1"
+mockito-core = "3.9.0"
+mockito-kotlin = "3.2.0"
+mockk = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,10 +48,15 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 com-google-accompanist = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "swipe-refresh" }
-
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito-core" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito-core" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 
 

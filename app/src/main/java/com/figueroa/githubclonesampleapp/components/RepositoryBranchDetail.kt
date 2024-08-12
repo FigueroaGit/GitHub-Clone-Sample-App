@@ -5,6 +5,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.figueroa.githubclonesampleapp.R
@@ -20,21 +21,21 @@ fun RepositoryBranchDetail(
             TitleSection(
                 icon = R.drawable.ic_branch,
                 label = gitHubRepositoryInformation.default_branch,
-                buttonText = "CHANGE BRANCH",
+                buttonText = stringResource(id = R.string.button_change_branch),
                 isHome = false
             )
             WorkSection(
                 backgroundColor = Color.LightGray,
                 icon = R.drawable.ic_code,
                 foregroundColor = Color.Black,
-                label = "Code",
+                label = stringResource(id = R.string.label_code),
                 hasInfo = false,
                 onClick = {})
             WorkSection(
                 backgroundColor = Color.LightGray,
                 icon = R.drawable.ic_commits,
                 foregroundColor = Color.Black,
-                label = "Commits",
+                label = stringResource(id = R.string.label_commits),
                 hasInfo = false,
                 onClick = {})
         }

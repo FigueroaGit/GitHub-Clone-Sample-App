@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -47,19 +48,21 @@ fun GitHubCloneAppBar(
         mutableStateOf(false)
     }
     if (showDialog.value) {
-        ShowSettingDropDownMenu(showDialog = showDialog, navController = navController)
+        ShowSettingDropDownMenu(showDialog = showDialog)
     }
     val context = LocalContext.current
 
     TopAppBar(
         title = {
-            Text(text = title)
+            Text(text = title, fontWeight = FontWeight.Bold)
         },
         navigationIcon = {
             if (!isHome) {
                 IconButton(onClick = { onBackPressed.invoke() }) {
                     if (icon != null) {
-                        Icon(painter = painterResource(id = icon), contentDescription = "Icon Back")
+                        Icon(painter = painterResource(id = icon), contentDescription = stringResource(
+                            id = R.string.icon_back_description
+                        ))
                     }
                 }
             } else {
@@ -76,7 +79,7 @@ fun GitHubCloneAppBar(
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "Search action",
+                        contentDescription = stringResource(id = R.string.icon_search_description),
                         tint = Color.Blue
                     )
                 }
@@ -88,7 +91,7 @@ fun GitHubCloneAppBar(
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_add_circle),
-                        contentDescription = "Add action",
+                        contentDescription = stringResource(id = R.string.icon_add_description),
                         tint = Color.Blue
                     )
                 }
@@ -97,7 +100,7 @@ fun GitHubCloneAppBar(
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_more_vert),
-                        contentDescription = "More actions",
+                        contentDescription = stringResource(id = R.string.icon_more_description),
                         tint = Color.Blue
                     )
                 }
@@ -110,7 +113,7 @@ fun GitHubCloneAppBar(
 }
 
 @Composable
-fun ShowSettingDropDownMenu(showDialog: MutableState<Boolean>, navController: NavController) {
+fun ShowSettingDropDownMenu(showDialog: MutableState<Boolean>) {
     Column(
         modifier = Modifier
             .fillMaxWidth()

@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,7 +63,7 @@ fun RepositoryDetailHeader(
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(id = R.drawable.ic_profile),
-                    contentDescription = "",
+                    contentDescription = stringResource(id = R.string.avatar_description),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(16.dp)
@@ -91,7 +92,7 @@ fun RepositoryDetailHeader(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_link),
-                    contentDescription = "homepage",
+                    contentDescription = stringResource(id = R.string.homepage_description),
                     modifier = Modifier.size(16.dp),
                     tint = Gray30
                 )
@@ -108,12 +109,15 @@ fun RepositoryDetailHeader(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_starred),
-                    contentDescription = "watchers",
+                    contentDescription = stringResource(id = R.string.watchers_description),
                     modifier = Modifier.size(16.dp),
                     tint = Gray30
                 )
                 Text(
-                    text = "${formatNumber(gitHubRepositoryInformation.stargazers_count)} stars",
+                    text = stringResource(
+                        id = R.string.label_stars,
+                        formatNumber(gitHubRepositoryInformation.stargazers_count)
+                    ),
                     fontWeight = FontWeight.SemiBold
                 )
                 Row(
@@ -122,12 +126,15 @@ fun RepositoryDetailHeader(
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_forks),
-                        contentDescription = "forks",
+                        contentDescription = stringResource(id = R.string.forks_description),
                         modifier = Modifier.size(16.dp),
                         tint = Gray30
                     )
                     Text(
-                        text = "${formatNumber(gitHubRepositoryInformation.forks_count)} forks",
+                        text = stringResource(
+                            id = R.string.label_forks,
+                            formatNumber(gitHubRepositoryInformation.forks_count)
+                        ),
                         fontWeight = FontWeight.SemiBold
                     )
                 }
@@ -154,11 +161,11 @@ fun RepositoryDetailHeader(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_starred),
-                            contentDescription = "Star",
+                            contentDescription = stringResource(id = R.string.star_description),
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.size(8.dp))
-                        Text(text = "STAR")
+                        Text(text = stringResource(id = R.string.button_star))
                     }
                 }
 
@@ -176,7 +183,7 @@ fun RepositoryDetailHeader(
                     Icon(
                         modifier = Modifier.size(16.dp),
                         painter = painterResource(id = R.drawable.ic_notifications),
-                        contentDescription = "Notifications"
+                        contentDescription = stringResource(id = R.string.notifications_description)
                     )
                 }
             }

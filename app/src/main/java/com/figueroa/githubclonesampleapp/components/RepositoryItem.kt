@@ -58,7 +58,7 @@ fun RepositoryItem(
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(id = R.drawable.ic_profile),
-                    contentDescription = "",
+                    contentDescription = stringResource(id = R.string.avatar_description),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .size(16.dp)
