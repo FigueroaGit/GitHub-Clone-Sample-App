@@ -61,7 +61,7 @@ There are a few ways to open this project.
 - Migrate project to KMP(Kotlin Multiplatform)
 
 ## 🤝 Want to Contribute?
-All contributions are welcomed. This project is still in development. If you encounter any problems, please create an issue [here](https://github.com/FigueroaGit/ClientesProspectos/issues) & if you want to contribute to this project, PRs are welcomed! 🙂
+All contributions are welcomed. This project is still in development. If you encounter any problems, please create an issue [here](https://github.com/FigueroaGit/GitHub-Clone-Sample-App/issues) & if you want to contribute to this project, PRs are welcomed! 🙂
 
 ## 👨‍💻 Developed By
 
