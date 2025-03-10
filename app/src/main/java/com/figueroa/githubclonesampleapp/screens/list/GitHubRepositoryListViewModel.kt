@@ -14,44 +14,7 @@ import kotlinx.coroutines.launch
 class GitHubRepositoryListViewModel(private val repository: GitHubRepositoryRepository) :
     ViewModel() {
 
-    var list: List<GitHubRepositoryInformation> by mutableStateOf(listOf())
-    var isLoading: Boolean by mutableStateOf(false)
-    var currentPage = 1
-    var isLastPage = false
-
-    init {
-        loadGitHubRepositories()
-    }
-
-    fun loadGitHubRepositories() {
-        if (isLoading || isLastPage) return
-
-        viewModelScope.launch {
-            isLoading = true
-            try {
-                when (val response = repository.getGitHubRepositories("Kotlin", 30, currentPage)) {
-                    is Resource.Success -> {
-                        val newList = response.data!!.filter { it.language == "Kotlin" }
-                        list = list + newList
-                        currentPage++
-                        if (newList.isEmpty()) {
-                            isLastPage = true
-                        }
-                    }
-
-                    is Resource.Error -> {
-                        isLoading = false
-                    }
-
-                    else -> {
-                        isLoading = false
-                    }
-                }
-            } catch (e: Exception) {
-                e.message
-            } finally {
-                isLoading = false
-            }
-        }
+    suspend fun getGitHubRepositories(page: Int): Resource<List<GitHubRepositoryInformation>> {
+        return repository.getGitHubRepositories("Kotlin", 30, page)
     }
 }
